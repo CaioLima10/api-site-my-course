@@ -19,22 +19,6 @@ export const createdLikes = (request, response) => {
   );
 };
 
-export const getLikes = (request, response) => {
-  db.query(
-    "SELECT l.*, u.username, userImg FROM likes as l JOIN user as u ON (u.id = l.likes_user_id) WHERE likes_post_id = ? ORDER BY created_at DESC"
-  )[request.query.likes_post_id],
-    (error, data) => {
-      if (error) {
-        console.log(error);
-        return response
-          .satus(500)
-          .json({ msg: "Aconteceu erro ao conectar com servidor." });
-      } else if (data) {
-        return response.status(200).json({ data });
-      }
-    };
-};
-
 export const deleteLikes = (request, response) => {
   const { likes_user_id, likes_post_id } = request.body;
 
@@ -49,6 +33,23 @@ export const deleteLikes = (request, response) => {
           .json({ msg: "Aconteceu erro ao conectar com servidor." });
       } else {
         return response.status(200).json({ msg: "Like removido com sucesso." });
+      }
+    }
+  );
+};
+
+export const getLikes = (request, response) => {
+  db.query(
+    "SELECT l.*, u.username FROM likes as l JOIN user as u ON (u.id = l.likes_user_id) WHERE likes_post_id = ?",
+    [request.query.likes_post_id],
+    (error, data) => {
+      if (error) {
+        console.log(error);
+        return response
+          .status(500)
+          .json({ msg: "Aconteceu erro ao conectar com servidor." });
+      } else if (data) {
+        return response.status(200).json({ data });
       }
     }
   );

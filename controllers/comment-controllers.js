@@ -32,7 +32,7 @@ export const createdComment = (request, response) => {
 
 export const getComment = (request, response) => {
   db.query(
-    "SELECT c.*, u.username, userImg FROM comments as c JOIN user as u ON (u.id = c.comment_user_id) WHERE post_id = ? ORDER BY created_at DESC",
+    "SELECT c.*, u.username FROM comments as c JOIN user as u ON (u.id = comment_user_id) WHERE post_id = ? ORDER BY created_at DESC",
     [request.query.post_id],
     (error, data) => {
       if (error) {
