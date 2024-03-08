@@ -30,6 +30,6 @@ app.use("/api/post", postRouter);
 app.use("/api/comment", commentRouter);
 app.use("/api/likes", likesRouter);
 
-app.listen(8005, () => {
+app.listen(8001, () => {
   console.log("Servidor conectado na porta 8001");
 });
