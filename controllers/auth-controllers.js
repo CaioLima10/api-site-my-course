@@ -124,6 +124,14 @@ export const login = (request, response) => {
   );
 };
 
+export const logout = (request, response) => {
+  return response
+    .clearCookie("accessToken", { secure: true, sameSile: "none" })
+    .clearCookie("refreshToken", { secure: true, sameSile: "none" })
+    .status(200)
+    .json({ msg: "logout efetuado com sucesso!" });
+};
+
 export const refresh = (request, response) => {
   const authHeader = request.headers && request.headers.cookie?.split(";")[1];
   if (!authHeader) {
@@ -171,5 +179,3 @@ export const refresh = (request, response) => {
       .json({ msg: "Erro ao conectar com o servidor!" });
   }
 };
-
-export const logout = (request, response) => {};
